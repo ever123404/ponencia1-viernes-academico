@@ -1,0 +1,2 @@
+total_estaciones,estaciones_principales,estaciones_urbanas,estaciones_rurales,longitud_total_km,caudal_promedio_m3_s,ancho_promedio_m,profundidad_promedio_m,velocidad_promedio_ms,temperatura_promedio_C,pH_promedio,registros_temporales,periodo_datos,tipos_contaminantes,fecha_generacion
+38,1,13,24,82.5,185000,4930.447368,48.18157895,1.036552632,26.85263158,6.697368421,730,2022-2024,5,5/29/2025 15:22

@@ -1,0 +1,36 @@
+# Entornos virtuales y variables de entorno
+venv/
+.env
+
+# Archivos de sistema y del IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Archivos Python compilados
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Archivos temporales o de respaldo
+*.log
+*.tmp
+*.bak
+
+# Archivos de ejecución local
+*.swp
+*.swo
+
+# Datos generados automáticamente
+outputs/
+*.csv
+*.npy
+*.pkl
+*.json
+
+# Archivos del navegador Streamlit
+.streamlit/
+
+# Notebooks temporales de Jupyter
+.ipynb_checkpoints/
