@@ -6,8 +6,9 @@
     <title>Simulador de Transporte de Contaminantes | Universidad Nacional de Cajamarca</title>
     <meta name="description" content="Simulación Matemática Avanzada - Departamento Académico de Matemática - UNC">
     
-    <!-- Evitar error 404 de favicon -->
-    <link rel="icon" href="data:;base64,=" type="image/x-icon">
+    <!-- Favicon institucional -->
+    <link rel="icon" href="./logo-unc.png" type="image/png">
+    <link rel="apple-touch-icon" href="./logo-unc.png">
     
     <style>
         * {
@@ -49,6 +50,41 @@
             flex-shrink: 0;
             border: 3px solid #d69e2e;
             overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .university-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 28px rgba(214, 158, 46, 0.6);
+        }
+        
+        .university-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+            padding: 4px;
+            background: #ffffff;
+        }
+        
+        /* Fallback profesional en caso de que la imagen no cargue */
+        .fallback-logo {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #d69e2e 0%, #f6ad55 100%);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: #1a202c;
+            font-weight: 900;
+            text-align: center;
+            line-height: 1.1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
         
         .institutional-content {
@@ -87,6 +123,13 @@
             color: #cbd5e1;
             font-weight: 400;
             line-height: 1.4;
+        }
+        
+        .developer-credit {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-top: 0.5rem;
+            font-style: italic;
         }
         
         @media (min-width: 768px) {
@@ -533,6 +576,29 @@
             color: #718096;
         }
         
+        /* Indicador de estado del logo */
+        .logo-status {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #48bb78;
+            border: 2px solid #ffffff;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .logo-loaded .logo-status {
+            opacity: 1;
+        }
+        
+        .logo-error .logo-status {
+            background: #f56565;
+            opacity: 1;
+        }
+        
         @media (max-width: 768px) {
             .institutional-content {
                 flex-direction: column;
@@ -585,6 +651,16 @@
         .animate-fade-in {
             animation: fadeIn 0.8s ease-out;
         }
+        
+        /* Animación de carga del logo */
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .logo-loading {
+            animation: logoPulse 2s infinite;
+        }
     </style>
 </head>
 <body>
@@ -592,35 +668,34 @@
         <!-- Header Institucional -->
         <header class="institutional-header">
             <div class="institutional-content">
-                <div class="university-logo">
-                    <div style="
-                        width: 100%; 
-                        height: 100%; 
-                        background: linear-gradient(135deg, #d69e2e 0%, #f6ad55 100%); 
-                        border-radius: 50%; 
-                        display: flex; 
-                        align-items: center; 
-                        justify-content: center; 
-                        color: #1a202c; 
-                        font-weight: 900; 
-                        text-align: center; 
-                        line-height: 1.1;
-                        border: 3px solid #ffffff;
-                        box-shadow: 0 8px 20px rgba(214, 158, 46, 0.4);
-                    ">
+                <div class="university-logo logo-loading" id="universityLogo">
+                    <!-- Logo institucional oficial -->
+                    <img src="./logo-unc.png" 
+                         alt="Logo Universidad Nacional de Cajamarca" 
+                         id="logoImage"
+                         loading="eager"
+                         onerror="handleLogoError(this)"
+                         onload="handleLogoLoad(this)">
+                    
+                    <!-- Fallback profesional -->
+                    <div class="fallback-logo" id="fallbackLogo">
                         <div>
-                            <div style="font-size: 0.5rem; margin-bottom: 1px;">UNIVERSIDAD</div>
-                            <div style="font-size: 1.3rem; font-weight: 900; margin: 1px 0;">UNC</div>
-                            <div style="font-size: 1rem; margin: 1px 0;">🏛️</div>
-                            <div style="font-size: 0.5rem; margin-top: 1px;">CAJAMARCA</div>
+                            <div style="font-size: 0.45rem; margin-bottom: 1px; opacity: 0.8;">UNIVERSIDAD</div>
+                            <div style="font-size: 1.1rem; font-weight: 900; margin: 1px 0;">UNC</div>
+                            <div style="font-size: 0.9rem; margin: 1px 0;">🏛️</div>
+                            <div style="font-size: 0.45rem; margin-top: 1px; opacity: 0.8;">CAJAMARCA</div>
                         </div>
                     </div>
+                    
+                    <!-- Indicador de estado -->
+                    <div class="logo-status" id="logoStatus"></div>
                 </div>
+                
                 <div class="university-info">
                     <h1 class="university-name">Universidad Nacional de Cajamarca</h1>
                     <h2 class="department-name">Departamento Académico de Matemática</h2>
                     <p class="project-title">Simulador de Transporte de Contaminantes en Medios Acuáticos | Investigación en Matemática Aplicada</p>
-                    <p style="font-size: 0.8rem; color: #9ca3af; margin-top: 0.5rem;">
+                    <p class="developer-credit">
                         <strong>Desarrollado por:</strong> Ever Rojas Huamán | Modelado Matemático Avanzado
                     </p>
                 </div>
@@ -765,7 +840,7 @@
                         </li>
                         <li>
                             <div class="phenomena-dot dot-red"></div>
-                            <span><strong>Morfología Asimétrica:</strong> Pluma de contaminación realista desde descarga lateral</span>
+                            <span><strong>Morfología Asimétrica:</strong> Pluma de contaminación realística desde descarga lateral</span>
                         </li>
                     </ul>
                 </div>
@@ -819,6 +894,108 @@
     </div>
 
     <script>
+        // ==========================================
+        // SISTEMA DE GESTIÓN DEL LOGO INSTITUCIONAL
+        // ==========================================
+        
+        function handleLogoLoad(imgElement) {
+            const logoContainer = document.getElementById('universityLogo');
+            const fallback = document.getElementById('fallbackLogo');
+            const status = document.getElementById('logoStatus');
+            
+            // Logo cargado exitosamente
+            logoContainer.classList.remove('logo-loading', 'logo-error');
+            logoContainer.classList.add('logo-loaded');
+            fallback.style.display = 'none';
+            imgElement.style.display = 'block';
+            
+            // Mostrar indicador de éxito brevemente
+            if (status) {
+                status.style.background = '#48bb78';
+                setTimeout(() => {
+                    status.style.opacity = '0';
+                }, 3000);
+            }
+        }
+        
+        function handleLogoError(imgElement) {
+            const logoContainer = document.getElementById('universityLogo');
+            const fallback = document.getElementById('fallbackLogo');
+            const status = document.getElementById('logoStatus');
+            
+            // Error al cargar logo - usar fallback
+            logoContainer.classList.remove('logo-loading', 'logo-loaded');
+            logoContainer.classList.add('logo-error');
+            imgElement.style.display = 'none';
+            fallback.style.display = 'flex';
+            
+            // Intentar rutas alternativas
+            tryAlternativeLogoPaths(imgElement);
+            
+            // Mostrar indicador de error
+            if (status) {
+                status.style.background = '#f56565';
+                status.style.opacity = '1';
+            }
+        }
+        
+        function tryAlternativeLogoPaths(imgElement) {
+            const alternativePaths = [
+                '/logo-unc.png',
+                'assets/logo-unc.png',
+                'assets/images/logo-unc.png',
+                'images/logo-unc.png',
+                '../logo-unc.png'
+            ];
+            
+            let pathIndex = 0;
+            
+            function tryNextPath() {
+                if (pathIndex < alternativePaths.length) {
+                    const testPath = alternativePaths[pathIndex];
+                    
+                    const testImg = new Image();
+                    testImg.onload = function() {
+                        imgElement.src = testPath;
+                        handleLogoLoad(imgElement);
+                    };
+                    testImg.onerror = function() {
+                        pathIndex++;
+                        setTimeout(tryNextPath, 100);
+                    };
+                    testImg.src = testPath;
+                } else {
+                    // Mantener diseño alternativo
+                }
+            }
+            
+            setTimeout(tryNextPath, 500);
+        }
+        
+        // Verificación inicial del logo
+        function initializeLogo() {
+            const imgElement = document.getElementById('logoImage');
+            const logoContainer = document.getElementById('universityLogo');
+            
+            if (!imgElement || !logoContainer) return;
+            
+            // Configurar evento de timeout para el logo
+            const logoTimeout = setTimeout(() => {
+                if (!logoContainer.classList.contains('logo-loaded')) {
+                    handleLogoError(imgElement);
+                }
+            }, 5000);
+            
+            // Limpiar timeout si el logo carga correctamente
+            imgElement.addEventListener('load', () => {
+                clearTimeout(logoTimeout);
+            });
+        }
+
+        // ==========================================
+        // SIMULADOR PRINCIPAL
+        // ==========================================
+        
         // Variables globales
         let canvas = null;
         let ctx = null;
@@ -853,19 +1030,22 @@
         let concentration = Array(gridY).fill().map(() => Array(gridX).fill(0));
         let newConcentration = Array(gridY).fill().map(() => Array(gridX).fill(0));
 
-        // Inicialización del simulador - ULTRA SIMPLE
+        // Inicialización del simulador
         function init() {
             try {
                 canvas = document.getElementById('simulationCanvas');
                 ctx = canvas.getContext('2d');
                 canvas.width = 1000;
                 canvas.height = 600;
+                
+                initializeLogo();
                 setupEventListeners();
                 setupSliders();
                 draw();
                 resizeCanvas();
+                
             } catch (error) {
-                alert('Error: ' + error.message);
+                alert('Error de inicialización: ' + error.message);
             }
         }
 
@@ -875,7 +1055,7 @@
                 const resetBtn = document.getElementById('resetBtn');
                 
                 if (!startBtn || !resetBtn) {
-                    throw new Error('Botones no encontrados');
+                    throw new Error('Botones de control no encontrados');
                 }
                 
                 startBtn.addEventListener('click', toggleSimulation);
@@ -1081,11 +1261,11 @@
                 // Flechas de flujo
                 drawFlowArrows(offsetX, offsetY, simWidth, simHeight);
                 
-                // Etiquetas
+                // Etiquetas con logo UNC
                 drawLabels(offsetX, offsetY, simWidth);
                 
             } catch (error) {
-                // Silencioso
+                // Silencioso para evitar spam en console
             }
         }
 
@@ -1265,14 +1445,13 @@
                 const industryY = offsetY - 90;
                 ctx.fillText('Complejo Industrial', industryX - 15, industryY - 20);
                 
-                // Texto "Dirección del flujo" reposicionado para mejor visibilidad
                 ctx.font = '16px system-ui, sans-serif';
-                const flowTextY = Math.max(offsetY - 25, 25); // Asegurar que esté al menos 25px del borde superior
+                const flowTextY = Math.max(offsetY - 25, 25);
                 ctx.fillText('Dirección del flujo →', offsetX + 80, flowTextY);
                 
                 if (isRunning || maxConcentration > 0) {
                     const dischargeX = offsetX + params.spillPosition * simWidth;
-                    const dischargeTextY = Math.max(offsetY - 15, 35); // Asegurar visibilidad
+                    const dischargeTextY = Math.max(offsetY - 15, 35);
                     ctx.fillText('Punto de Descarga', dischargeX - 50, dischargeTextY);
                 }
                 
@@ -1282,7 +1461,7 @@
                 const labelY = offsetY + (canvas ? canvas.height * 0.65 : 400) + 30;
                 ctx.fillText('Universidad Nacional de Cajamarca | Simulación Matemática', offsetX, labelY);
                 
-                // Firma del desarrollador (discreta)
+                // Firma del desarrollador
                 ctx.font = '12px system-ui, sans-serif';
                 ctx.fillStyle = '#718096';
                 const authorY = labelY + 20;
@@ -1342,8 +1521,18 @@
             }
         }
 
-        // Inicialización simple
+        // Inicialización
         document.addEventListener('DOMContentLoaded', init);
+        
+        // Verificación adicional del logo después de la carga
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const logoContainer = document.getElementById('universityLogo');
+                if (logoContainer && !logoContainer.classList.contains('logo-loaded')) {
+                    initializeLogo();
+                }
+            }, 1000);
+        });
     </script>
 </body>
 </html>
