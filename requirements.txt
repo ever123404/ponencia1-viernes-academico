@@ -1,27 +1,24 @@
-# Dependencias para Sistema Amazonas
-# Instalación: pip install -r requirements.txt
+# ===== 1. requirements.txt (Para Python - Backend opcional) =====
+# Si planeas agregar funcionalidades backend en Python
 
-# === CORE CIENTÍFICO ===
-numpy>=1.21.0
-scipy>=1.7.0
-pandas>=1.3.0
-matplotlib>=3.5.0
-seaborn>=0.11.0
+# Generación de QR codes
+qrcode==7.4.2
+Pillow==10.1.0
 
-# === WEB Y VISUALIZACIÓN ===
-streamlit>=1.20.0
-plotly>=5.10.0
+# Análisis de datos (opcional)
+numpy==1.24.3
+pandas==2.0.3
+matplotlib==3.7.2
 
-# === MATEMÁTICA SIMBÓLICA ===
-sympy>=1.9.0
+# Web framework (si agregas backend)
+flask==3.0.0
+fastapi==0.104.1
+uvicorn==0.24.0
 
-# === MACHINE LEARNING (OPCIONAL) ===
-scikit-learn>=1.0.0
+# Científicas adicionales (opcional)
+scipy==1.11.3
+sympy==1.12
 
-# === JUPYTER (OPCIONAL) ===
-jupyter>=1.0.0
-notebook>=6.4.0
-ipywidgets>=7.6.0
+# Utilidades
+requests==2.31.0
 
-# === UTILIDADES ===
-pathlib2>=2.3.6;python_version<"3.4"
