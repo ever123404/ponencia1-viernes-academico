@@ -6,6 +6,9 @@
     <title>Simulador de Transporte de Contaminantes | Universidad Nacional de Cajamarca</title>
     <meta name="description" content="Simulación Matemática Avanzada - Departamento Académico de Matemática - UNC">
     
+    <!-- Evitar error 404 de favicon -->
+    <link rel="icon" href="data:;base64,=" type="image/x-icon">
+    
     <style>
         * {
             margin: 0;
@@ -66,6 +69,31 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
+            position: relative;
+        }
+        
+        .logo-content {
+            text-align: center;
+            line-height: 1;
+        }
+        
+        .logo-unc {
+            font-size: 1.2rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+        
+        .logo-icon {
+            font-size: 1.4rem;
+            margin: 2px 0;
+        }
+        
+        .logo-city {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
         }
         
         .institutional-content {
@@ -1340,7 +1368,24 @@
         }
 
         // Inicialización simple
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', function() {
+            init();
+            
+            // Script adicional para forzar carga del logo
+            setTimeout(() => {
+                const logo = document.getElementById('mainLogo');
+                const fallback = document.getElementById('logoFallback');
+                
+                if (logo && !logo.complete && logo.naturalWidth === 0) {
+                    console.log('🔄 Forzando recarga del logo...');
+                    logo.src = logo.src + '?t=' + Date.now(); // Cache bust
+                } else if (logo && logo.complete && logo.naturalWidth > 0) {
+                    console.log('✅ Logo ya está cargado');
+                    logo.style.display = 'block';
+                    fallback.style.display = 'none';
+                }
+            }, 2000);
+        });
     </script>
 </body>
 </html>
